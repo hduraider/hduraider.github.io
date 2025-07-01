@@ -15,11 +15,22 @@
         margin-right: 1rem;
         margin-bottom: 20px;
     }
+    .spinner {
+        width: 60px;
+        height: 60px;
+        border: 6px solid #ccc;
+        border-top: 6px solid #007acc;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+      @keyframes spin {
+        0%   { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+
   </style>
 <script src="https://smallbusinesswa--uat.sandbox.my.salesforce-sites.com/test/lightning/lightning.out.js"></script>
-  <div id="spinner">
-    Loading4...
-  </div>
+  <div id="spinner" class="spinner"></div>
 <div data-lightning-out="true" class="site-cos"></div>
 <script>
     const appName='c:LA12_ContactUsApplication';

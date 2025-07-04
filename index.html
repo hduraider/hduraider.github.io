@@ -31,8 +31,8 @@
   </style>
 <script src="lwc12_ContactUsForm"></script>
 <script src="https://smallbusinesswa--dev.sandbox.my.salesforce-sites.com/lightning/lightning.out.js"></script>
-  <div id="spinner" class="spinner"></div>5
-<div data-lightning-out="true" class="site-cos"></div>
+  <div id="spinner" class="spinner"></div>
+<div data-lightning-out="true" class="site-cos"></div>  v6
 <script>
     const appName='c:LA12_ContactUsApplication';
     const componentname='c:lwc12_ContactUsForm';
@@ -49,10 +49,51 @@
               function(cmp) {
                 console.log("LWC component was created1");
                 document.getElementById("spinner").style.display = "none";
+
+                var el = document.createElement('script');
+                el.src = 'https://www.google.com/recaptcha/api.js?render=explicit';
+                el.async = 'true';
+                el.addEventListener('load', function () {
+                    console.log('Before Init');
+                    onloadCallback();
+                    console.log('After Init');
+                });
+                document.head.appendChild(el);
               }
           );
         },
         lightningEndPoint
       );
 </script>
+
+<script>
+    var grecaptchaReady = false;
+    var onloadCallback = function(){ grecaptchaReady = true; };
+    var verifyCallback = function(token) {
+        document.dispatchEvent(new CustomEvent('grecaptchaVerified', {'detail': {response: token}}));
+    };
+    var expireCallback = function() {
+        document.dispatchEvent(new Event('grecaptchaExpired'));
+    };
+    var errorCallback = function() {
+        document.dispatchEvent(new Event('grecaptchaError'));
+    };
+    document.addEventListener('grecaptchaRender', function(e) {
+        onloadCallback = function() {
+            grecaptchaReady = true;
+            grecaptcha.render(e.detail.element, {
+                'sitekey': '6LedM20rAAAAABvNJmYhMQ1UpcRZ1qZZAJrJ4-Vf',
+                'callback': verifyCallback,
+                'expired-callback': expireCallback,
+                'error-callback': errorCallback
+            });
+        };
+        if (grecaptchaReady) {
+            onloadCallback();
+        }
+    });
+    document.addEventListener('grecaptchaReset', function() {
+        grecaptcha.reset();
+    }); 
+</script>     
 </html>
